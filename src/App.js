@@ -21,6 +21,19 @@ class App extends React.Component {
       .then(result => this.setState({ data: result }));
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.data.message.includes("terrier")) {
+      return false;
+    }
+    return true;
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("dogURL", this.state.data.message);
+    const dogBreed = this.state.data.message.split("/")[4];
+    alert(dogBreed);
+  }
+
   render() {
     if (this.state.data === "") return "loading...";
     return (
